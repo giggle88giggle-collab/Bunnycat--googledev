@@ -19,8 +19,8 @@
 
 <h2>3. How data is stored and protected</h2>
 <ul>
-<li>The refresh token is encrypted with a separate key. The encrypted token and key are kept as encrypted secrets in a private GitHub repository. They are never published, shared in chat, or written into code or logs.</li>
-<li>The publish log records, for each video, the title, episode name, upload result, and YouTube video ID and link. It is kept in the same private repository.</li>
+<li>The refresh token is encrypted with a separate key (AES-256-GCM) and stored in encrypted form on Netlify's storage for this tool. The encryption key and service key are kept as secret environment variables on Netlify. They are never published, shared in chat, or written into code, logs or the public web.</li>
+<li>The publish log records, for each video, the title, episode name, upload result, and YouTube video ID and link. It is kept in a private GitHub repository.</li>
 <li>No refresh token or access token is sent to a web browser.</li>
 </ul>
 
@@ -34,14 +34,15 @@
 <h2>6. Third-party services</h2>
 <ul>
 <li><strong>Google / YouTube</strong> – sign-in and video uploads. Governed by Google's privacy policy.</li>
-<li><strong>GitHub</strong> – hosts the code, runs the scheduled jobs, and stores the encrypted secrets.</li>
+<li><strong>GitHub</strong> – hosts the code and the publish log, and runs the scheduled jobs.</li>
+<li><strong>Netlify</strong> – hosts the sign-in connection and stores the encrypted refresh token.</li>
 <li><strong>Microsoft Edge text-to-speech</strong> – the narration script text is sent to Microsoft's speech service to create voice audio. No Google user data is sent to it.</li>
 </ul>
 
 <h2>7. Retention and deletion</h2>
 <ul>
 <li>The refresh token is kept until it is revoked or the stored secret is deleted.</li>
-<li>To remove the tool's access, the studio can remove "Bunny &amp; Cat" at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a> and delete the GitHub secrets. Access then stops immediately.</li>
+<li>To remove the tool's access, the studio can remove "Bunny &amp; Cat" at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a> and delete the stored token on Netlify. Access then stops immediately.</li>
 <li>Uploaded videos stay on YouTube until the studio removes them there.</li>
 </ul>
 
